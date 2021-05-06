@@ -8,6 +8,7 @@ def get_candidate_keypoints(D, w=16):
 	# These 2 lines aren't specified in the paper but it makes it so the extrema
 	# are found within the entire octave. They are always found in the first or
 	# last layer so I probably have something wrong with my DoG pyramid construction.
+	print(D.shape)
 	D[:,:,0] = 0
 	D[:,:,-1] = 0
 	''' End '''

@@ -14,14 +14,15 @@ def SIFT_output(im):
     plt.axis('off')
     
     plt.savefig('output2.png')
-    img=cv2.imread("output2.png")
-    return img
+    plt.show()
+    #img=cv2.imread("output2.png")
+    #return img
     
 
 
 if __name__ == '__main__':
 	
-	im = imread("input.png")
-	
-	cv2.imwrite('output3.jpg', SIFT_output(im))
+	im = cv2.imread("ex7.png", 0)
+	SIFT_output(im)
+	#cv2.imwrite('output3.jpg', SIFT_output(im))
 	

@@ -3,7 +3,9 @@ from scipy.ndimage.filters import convolve
 import numpy as np
 from keypoints import get_keypoints
 from orientation import assign_orientation
+from find_harris_corners import find_harris_corners
 from descriptors import get_local_descriptors
+import cv2
 
 class SIFT(object):
 
@@ -63,7 +65,15 @@ class SIFT(object):
         return pyr
         
     def get_features(self):
-        img = convolve(rgb2gray(image), self.gaussian_filter(variable))
+        k = 0.04
+        window_size = 5 
+        threshold = 10000.00
+        #img = convolve(rgb2gray(image), self.gaussian_filter(variable))
+        #gaussian_pyr = self.generate_gaussian_pyramid(img, self.num_octave, self.s, self.sigma)
+        #DoG_pyr = self.generate_DoG_pyramid(gaussian_pyr)
+        print(image.shape)
+        corner_list, corner_img = find_harris_corners(image, k, window_size, threshold)
+        img = convolve(rgb2gray(corner_img), self.gaussian_filter(variable))
         gaussian_pyr = self.generate_gaussian_pyramid(img, self.num_octave, self.s, self.sigma)
         DoG_pyr = self.generate_DoG_pyramid(gaussian_pyr)
         kp_pyr = get_keypoints(DoG_pyr, self.R_th, self.t_c, self.w)
